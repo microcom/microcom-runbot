@@ -22,22 +22,13 @@
 {
     'name': 'Runbot Microcom',
     'category': 'Website',
-    'summary': 'OCA specific customizations',
+    'summary': 'Microcom specific customizations',
     'version': '1.0',
     'description': """
-Runbot OCA Customizations
-=========================
-
-* fix nginx config to match OCA setup
-
-
-Contributors
-------------
-
-Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
-
+Runbot Microcom Customizations
+==============================
 """,
-    'author': "Odoo Community Association (OCA)",
+    'author': "Odoo Community Association (OCA), Microcom",
     'depends': ['runbot'],
     'data': [
         'runbot_qweb.xml',

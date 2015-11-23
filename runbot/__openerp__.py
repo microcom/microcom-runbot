@@ -3,8 +3,14 @@
     'category': 'Website',
     'summary': 'Runbot',
     'version': '1.2',
-    'description': "Runbot",
-    'author': 'OpenERP SA',
+    'description': """
+Runbot (Microcom)
+=================
+
+* Changed fqdn() so that correct hostname is fetched (runbot.py, line #154)
+
+""",
+    'author': 'OpenERP SA, Microcom',
     'depends': ['website'],
     'external_dependencies': {
         'python': ['matplotlib'],
