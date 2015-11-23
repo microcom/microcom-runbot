@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <template id='runbot_build' name='runbot.build' inherit_id='runbot.build'>
+      <!-- let the rebuild button be visible when the build is not running,
+      regardless of the `ask_rebuild` request parameter -->
+      <xpath expr='//form[@t-if="request.params.get(&apos;ask_rebuild&apos;)"]'
+             position="attributes">
+        <attribute name='t-if'>request.params.get(&apos;ask_rebuild&apos;) or build['state'] != 'running'</attribute>
+      </xpath>
+    </template>
+
+    <template id="runbot.nginx_config">
+#server_names_hash_max_size 2048;
+#server_names_hash_bucket_size 256;
+#client_max_body_size 10M;
+index index.html;
+log_format full '$remote_addr - $remote_user [$time_local] '
+                '"$request" $status $body_bytes_sent '
+                '"$http_referer" "$http_user_agent" $request_time';
+autoindex on;
+
+#gzip on;
+#gzip_types text/css text/plain application/xml application/json application/javascript;
+
+<t t-foreach="builds" t-as="build">
+server {
+    listen [::]:443 ssl;
+    server_name ~^<t t-esc="build.dest"/>[-.].*$;
+    location / {
+        proxy_pass http://localhost:<t t-esc="build.port"/>;
+        proxy_redirect http://localhost:<t t-esc="build.port"/>/ https://$host:$server_port/;
+        proxy_set_header Host $host;
+    }
+    location /longpolling { proxy_pass http://localhost:<t t-esc="build.port + 1"/>; }
+    ssl_certificate /etc/ssl/nginx/server.crt;
+    ssl_certificate_key /etc/ssl/nginx/server.key;
+}
+server {
+    listen [::]:80;
+    server_name ~^<t t-esc="build.dest"/>[-.].*$;
+    location / {
+        proxy_pass http://localhost:<t t-esc="build.port"/>;
+        proxy_redirect http://localhost:<t t-esc="build.port"/>/ http://$host:$server_port/;
+        proxy_set_header Host $host;
+    }
+    location /longpolling { proxy_pass http://127.0.0.1:<t t-esc="build.port + 1"/>; }
+}
+</t>
+
+    </template>
+
+  </data>
+</openerp>

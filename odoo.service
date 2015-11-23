@@ -1,0 +1,19 @@
+[Unit]
+Description=Odoo instance for runbot
+After=postgresql-9.3.service
+
+[Service]
+User=odoo
+Group=odoo
+
+# Disable OOM kill on the postmaster
+OOMScoreAdjust=-1000
+
+ExecStart=/odoo/odoo.py -c /home/odoo/odoo.conf
+
+# Give a reasonable amount of time for the server to start up/shut down
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target
+
