@@ -7,7 +7,7 @@ Documentation can be found [here](https://docs.google.com/document/d/14edZR-ATpo
 
 /runbot-microcom -> module needed after Runbot installation 
 
-/runbot -> untouched Runbot module (version 1.2)
+/runbot -> slightly modified Runbot module (version 1.2) for Microcom's needs 
 
 odoo.conf -> Odoo config file
 
