@@ -25,8 +25,8 @@ autoindex on;
 
 <t t-foreach="builds" t-as="build">
 server {
-    listen [::]:443 ssl;
-    server_name ~^<t t-esc="build.dest"/>[-.].*$;
+    listen 443;
+    server_name <t t-esc="build.dest"/>.runbot.microcom-test.ca;
     location / {
         proxy_pass http://localhost:<t t-esc="build.port"/>;
         proxy_redirect http://localhost:<t t-esc="build.port"/>/ https://$host:$server_port/;
@@ -37,8 +37,8 @@ server {
     ssl_certificate_key /etc/ssl/nginx/server.key;
 }
 server {
-    listen [::]:80;
-    server_name ~^<t t-esc="build.dest"/>[-.].*$;
+    listen 80;
+    server_name <t t-esc="build.dest"/>.runbot.microcom-test.ca;
     location / {
         proxy_pass http://localhost:<t t-esc="build.port"/>;
         proxy_redirect http://localhost:<t t-esc="build.port"/>/ http://$host:$server_port/;

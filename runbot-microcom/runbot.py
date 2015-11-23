@@ -42,24 +42,24 @@ class RunbotRepo(orm.Model):
         return super(RunbotRepo, self).cron(cr, uid, ids, context=context)
 
 
-#class RunbotBuild(models.Model):
-#    _inherit = 'runbot.build'
-#
-#    @api.multi
-#    def checkout(self):
-#        super(RunbotBuild, self).checkout()
-#        for build in self:
-#            dirname = osp.join(build.server('addons'),
-#                               'server_environment_files_sample')
-#            dirname_new = osp.join(build.server('addons'),
- #                                  'server_environment_files')
-#            if osp.isdir(dirname):
-#                os.rename(dirname, dirname_new)
-#            build.write({
-#                'modules': build.modules.replace(
-#                    'server_environment_files_sample',
-#                    'server_environment_files'),
-#                    })
-#        rcfile = osp.expanduser('~/.openerp_serverrc')
-#        with open(rcfile, 'w') as fobj:
-#            fobj.write('[options]\nrunning_env = dev\n')
+class RunbotBuild(models.Model):
+    _inherit = 'runbot.build'
+
+    @api.multi
+    def checkout(self):
+        super(RunbotBuild, self).checkout()
+        for build in self:
+            dirname = osp.join(build.server('addons'),
+                               'server_environment_files_sample')
+            dirname_new = osp.join(build.server('addons'),
+                                   'server_environment_files')
+            if osp.isdir(dirname):
+                os.rename(dirname, dirname_new)
+            build.write({
+                'modules': build.modules.replace(
+                    'server_environment_files_sample',
+                    'server_environment_files'),
+                    })
+        rcfile = osp.expanduser('~/.openerp_serverrc')
+        with open(rcfile, 'w') as fobj:
+            fobj.write('[options]\nrunning_env = dev\n')
