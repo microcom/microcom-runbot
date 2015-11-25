@@ -8,6 +8,7 @@ Runbot (Microcom)
 =================
 
 * Changed fqdn() so that correct hostname is fetched (runbot.py, line #154)
+* Converted Runbot module to Odoo V9 (res_config_view.xml, line #51)
 
 """,
     'author': 'OpenERP SA, Microcom',
