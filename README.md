@@ -13,4 +13,6 @@ odoo.conf -> Odoo config file
 
 odoo.service -> file needed to auto-start Odoo as a service
 
+postgresql.conf -> modified so that MaxConnections is now 500 instead of 100
+
 
